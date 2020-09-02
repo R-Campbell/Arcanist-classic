@@ -4,11 +4,11 @@ Arcanist addon for wow classic
 Based off of https://www.curseforge.com/wow/addons/necrosis-classic
 
 Working features:
-- Conjured Food/Water 
-- Port menu
-- Buff menu
-- Mana Gem menu
-- Timers
+* Conjured Food/Water 
+* Port menu
+* Buff menu
+* Mana Gem menu
+* Timers
 
 Download the latest version at https://www.curseforge.com/wow/addons
 

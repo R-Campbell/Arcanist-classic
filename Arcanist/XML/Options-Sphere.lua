@@ -133,7 +133,11 @@ function Arcanist:SetSphereConfig()
 		------------------------------------------------- https://wow.gamepedia.com/Using_UIDropDownMenu
 		-- Spell associated with the sphere
 		frame = CreateFrame("Frame", "ArcanistSpellSelection", ArcanistSphereConfig, "UIDropDownMenuTemplate")
-		UIDropDownMenu_SetText(ArcanistSpellSelection, Arcanist.GetSpellName(ArcanistConfig.MainSpell))
+		if ArcanistConfig.MainSpell == "showhide" then
+			UIDropDownMenu_SetText(ArcanistSpellSelection, Arcanist.Config.Sphere["SPHERE_SHOW_HIDE"])
+		else
+			UIDropDownMenu_SetText(ArcanistSpellSelection, Arcanist.GetSpellName(ArcanistConfig.MainSpell))
+		end
 		frame:Show()
 		frame:ClearAllPoints()
 		frame:SetPoint("RIGHT", ArcanistSphereConfig, "BOTTOMRIGHT", 40, 275)
@@ -273,7 +277,34 @@ function Arcanist.Spell_Init()
 	local main_spell = Arcanist.GetMainSpellList()
 	local color = ""
 
-	for i = 1, #main_spell, 1 do
+	if Arcanist.Debug.buttons then
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("Spell_Init"
+			.." '"..tostring(ArcanistConfig.MainSpell).."'"
+		)
+	end
+
+	-- Give the ability to toggle buttons with main sphere click
+	color = "|CFFFFFFFF"
+	element.func = Arcanist.Spell_Click
+	spell = color..Arcanist.Config.Sphere["SPHERE_SHOW_HIDE"]
+	element.text = spell
+	element.arg1 = 1
+
+	if (ArcanistConfig.MainSpell == "showhide") then
+		if Arcanist.Debug.buttons then
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage("Spell_Init"
+				.." 'showhide checked'"
+				.." spell' "..spell
+			)
+		end
+		element.checked = true
+		selected = spell
+	else
+		element.checked = false
+	end
+	UIDropDownMenu_AddButton(element)
+
+	for i = 2, #main_spell, 1 do
 		if Arcanist.IsSpellKnown(main_spell[i]) then  -- known
 			color = "|CFFFFFFFF"
 			element.func = Arcanist.Spell_Click
@@ -299,7 +330,11 @@ function Arcanist.Spell_Click(self, arg1, arg2, checked)
 	local ID = self:GetID()
 
 	UIDropDownMenu_SetSelectedID(ArcanistSpellSelection, arg1)
-	ArcanistConfig.MainSpell = main_spell[arg1]
+	if arg1 == 1 then
+		ArcanistConfig.MainSpell = "showhide"
+	else
+		ArcanistConfig.MainSpell = main_spell[arg1]
+	end
 	Arcanist.MainButtonAttribute()
 end
 

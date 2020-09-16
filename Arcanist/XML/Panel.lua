@@ -13,17 +13,17 @@ local _G = getfenv(0)
 
 -- Open the options menu frame
 function Arcanist:OpenConfigPanel()
-
-	-- Help messages are displayed
-	if self.ChatMessage.Help[1] then
-		for i = 1, #self.ChatMessage.Help, 1 do
-			self:Msg(self.ChatMessage.Help[i], "USER")
-		end
-	end
     local me = self
 	local frame = _G["ArcanistGeneralFrame"]
 	-- If the windows does not exist, we create it
 	if not frame then
+		-- Help messages are displayed
+		if self.ChatMessage.Help[1] then
+			for i = 1, #self.ChatMessage.Help, 1 do
+				self:Msg(self.ChatMessage.Help[i], "USER")
+			end
+		end
+
 		frame = CreateFrame("Frame", "ArcanistGeneralFrame", UIParent)
 
 		--Definition of its attributes
@@ -188,10 +188,15 @@ function Arcanist:OpenConfigPanel()
 
 		self:SetPanel(1)
 	else
-
 		if frame:IsVisible() then
 			frame:Hide()
 		else
+			-- Help messages are displayed
+			if self.ChatMessage.Help[1] then
+				for i = 1, #self.ChatMessage.Help, 1 do
+					self:Msg(self.ChatMessage.Help[i], "USER")
+				end
+			end
 			frame:Show()
 		end
 	end

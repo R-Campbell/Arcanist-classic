@@ -274,25 +274,28 @@ function Arcanist:MainButtonAttribute()
 	f = _G[f]
 	if not f then return end
 
+	-- Left click casts the main spell
+	if ArcanistConfig.MainSpell == "showhide" then
+		f:SetAttribute("type1", "togglebuttons")
+		f:SetAttribute("_togglebuttons", function(self, unit, button, actionType)
+			ArcanistConfig.HideAllButtons = not ArcanistConfig.HideAllButtons
+			Arcanist:ButtonSetup()
+		end)
+	else
+		local main_cast = Arcanist.GetSpellCastName(ArcanistConfig.MainSpell)
+
+		if main_cast ~= "" then
+			f:SetAttribute("type1", "spell")
+			f:SetAttribute("spell", main_cast)
+		end
+	end
+
 	-- Right click opens the Options menu
 	f:SetAttribute("type2", "Open")
 	f.Open = function()
 		if not InCombatLockdown() then
 			Arcanist:OpenConfigPanel()
 		end
-	end
-
-	local main_cast = Arcanist.GetSpellCastName(ArcanistConfig.MainSpell)
-	if Arcanist.Debug.buttons then
-		_G["DEFAULT_CHAT_FRAME"]:AddMessage("MainButtonAttribute"
-			.." '"..tostring(ArcanistConfig.MainSpell or "null").."'"
-			.." c'"..tostring(main_cast or "null").."'"
-		)
-	end
-
-	if main_cast ~= "" then
-		f:SetAttribute("type1", "spell")
-		f:SetAttribute("spell", main_cast)
 	end
 end
 

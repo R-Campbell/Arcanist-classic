@@ -266,6 +266,76 @@ function Arcanist:SetButtonsConfig()
 
 		ArcanistRotationLow:SetText("0")
 		ArcanistRotationHigh:SetText("360")
+
+		-- Create buttons for showing count of food on the button
+		frame = CreateFrame("CheckButton", "ArcanistShowFoodCount", ArcanistButtonsConfig2, "UICheckButtonTemplate")
+		frame:EnableMouse(true)
+		frame:SetWidth(24)
+		frame:SetHeight(24)
+		frame:Show()
+		frame:ClearAllPoints()
+		frame:SetPoint("LEFT", ArcanistButtonsConfig2, "BOTTOMLEFT", 25, initY - 50)
+
+		frame:SetScript("OnClick", function(self)
+			if (self:GetChecked()) then
+				ArcanistConfig.ShowFoodCount = true
+			else
+				ArcanistConfig.ShowFoodCount = false
+			end
+			Arcanist:ButtonSetup()
+			Arcanist:BagExplore()
+		end)
+
+		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
+		FontString:Show()
+		FontString:ClearAllPoints()
+		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
+		FontString:SetTextColor(1, 1, 1)
+		frame:SetFontString(FontString)
+
+		if Arcanist.Debug.options then
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage("ConfigButtons"
+			.." sfc'"..tostring(ArcanistConfig.ShowFoodCount).."'"
+			)
+		end
+
+		_G["ArcanistShowFoodCount"]:SetChecked(ArcanistConfig.ShowFoodCount)
+		_G["ArcanistShowFoodCount"]:SetText(self.Config.Buttons.Name["SHOW_FOOD_COUNT"])
+
+		-- Create buttons for showing count of water on the button
+		frame = CreateFrame("CheckButton", "ArcanistShowWaterCount", ArcanistButtonsConfig2, "UICheckButtonTemplate")
+		frame:EnableMouse(true)
+		frame:SetWidth(24)
+		frame:SetHeight(24)
+		frame:Show()
+		frame:ClearAllPoints()
+		frame:SetPoint("LEFT", ArcanistButtonsConfig2, "BOTTOMLEFT", 25, initY - 75)
+
+		frame:SetScript("OnClick", function(self)
+			if (self:GetChecked()) then
+				ArcanistConfig.ShowWaterCount = true
+			else
+				ArcanistConfig.ShowWaterCount = false
+			end
+			Arcanist:ButtonSetup()
+			Arcanist:BagExplore()
+		end)
+
+		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
+		FontString:Show()
+		FontString:ClearAllPoints()
+		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
+		FontString:SetTextColor(1, 1, 1)
+		frame:SetFontString(FontString)
+
+		if Arcanist.Debug.options then
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage("ConfigButtons"
+			.." swc'"..tostring(ArcanistConfig.ShowWaterCount).."'"
+			)
+		end
+
+		_G["ArcanistShowWaterCount"]:SetChecked(ArcanistConfig.ShowWaterCount)
+		_G["ArcanistShowWaterCount"]:SetText(self.Config.Buttons.Name["SHOW_WATER_COUNT"])
 	end
 
 	ArcanistRotation:SetValue(ArcanistConfig.ArcanistAngle)

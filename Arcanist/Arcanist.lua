@@ -88,6 +88,7 @@ Local.DefaultConfig = {
 	CreatureAlert = true,
 	ArcanistLockServ = true,
 	ArcanistAngle = 180,
+	HideAllButtons = false,
 	Buttons = {
 		Buff = true,
 		Mount = true,
@@ -96,6 +97,8 @@ Local.DefaultConfig = {
 		Port = true,
 		Mana = true,
 	},
+	ShowFoodCount = false,
+	ShowWaterCount = false,
 	ArcanistToolTip = true,
 
 	MainSpell = "blink",
@@ -1561,6 +1564,22 @@ function Arcanist:BagExplore(arg)
 		ArcanistMainCount:SetText("")
 	end
 
+	if ArcanistConjureFoodCount then
+		if ArcanistConfig.ShowFoodCount then
+			ArcanistConjureFoodCount:SetText(math.min(Local.Consumables.ConjuredFood.count, 99))
+		else
+			ArcanistConjureFoodCount:SetText("")
+		end
+	end
+
+	if ArcanistConjureWaterCount then
+		if ArcanistConfig.ShowWaterCount then
+			ArcanistConjureWaterCount:SetText(math.min(Local.Consumables.ConjuredWater.count, 99))
+		else
+			ArcanistConjureWaterCount:SetText("")
+		end
+	end
+
 	-- Update icons and we're done
 	Arcanist.UpdateIcons()
 end
@@ -1572,19 +1591,14 @@ end
 -- Display or Hide buttons depending on spell availability
 function Arcanist:ButtonSetup()
 	local NBRScale = (100 + (ArcanistConfig.ArcanistButtonScale - 85)) / 100
-	local dist = 35 * NBRScale
-
-	if ArcanistConfig.ArcanistButtonScale <= 100 then
-		NBRScale = 1.1
-		dist = 40 * NBRScale
-	end
+	local dist = 42
 
 	if Arcanist.Debug.buttons then
 		_G["DEFAULT_CHAT_FRAME"]:AddMessage("ButtonSetup === Begin")
 	end
 
 	local fm = Arcanist.Mage_Buttons.main.f
-	local indexScale = -36
+	local indexScale = -42
 
 	for i, v in ipairs (Arcanist.Mage_Lists.on_sphere) do
 		local fr = Arcanist.Mage_Buttons[v.f_ptr].f
@@ -1603,6 +1617,7 @@ function Arcanist:ButtonSetup()
 			or v.menu                        -- or on menu of spells
 			or v.item)						 -- or item to use
 			and ArcanistConfig.Buttons[v.name]
+			and not ArcanistConfig.HideAllButtons
 		then
 			if not f then
 				f = Arcanist:CreateSphereButtons(Arcanist.Mage_Buttons[v.f_ptr])
@@ -1616,7 +1631,7 @@ function Arcanist:ButtonSetup()
 					((dist) * cos(ArcanistConfig.ArcanistAngle - indexScale)),
 					((dist) * sin(ArcanistConfig.ArcanistAngle - indexScale))
 				)
-				indexScale = indexScale + 36
+				indexScale = indexScale + 42
 			else
 				f:SetPoint(
 					ArcanistConfig.FramePosition[fr][1],
@@ -1628,6 +1643,18 @@ function Arcanist:ButtonSetup()
 			end
 			f:Show()
 			f:SetScale(NBRScale)
+
+			if v.name == "ConjureFood" or v.name == "ConjureWater" then
+				-- Create the counter
+				local FontString = _G["Arcanist"..v.name.."Count"]
+				if not FontString then
+					FontString = f:CreateFontString("Arcanist"..v.name.."Count", nil, "GameFontNormal")
+				end
+
+				-- Define its attributes
+				FontString:SetPoint("CENTER")
+				FontString:SetTextColor(1, 1, 0)
+			end
 		else
 			if f then
 				f:Hide()

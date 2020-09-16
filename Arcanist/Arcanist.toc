@@ -1,7 +1,7 @@
 ## Interface: 11302
 ## Title: Arcanist
 ## Notes: Mage UI & Consumable Management
-## Version: 1.1.2
+## Version: 1.2.0
 ## Website: https://github.com/R-Campbell/Arcanist-classic
 ## DefaultState: Enabled
 ## X-Original-Author: Lomig

@@ -12,7 +12,7 @@ ARCANIST_ID = "Arcanist"
 Arcanist.Data = {
 	Version = GetAddOnMetadata("Arcanist", "Version"),
 	AppName = "Arcanist",
-	LastConfig = 20200819,
+	LastConfig = 20200916,
 	Enabled = false,
 }
 
@@ -38,7 +38,7 @@ Arcanist.Debug = {
 	tool_tips		= false, -- spell info that goes into tool tips
 	speech			= false, -- steps to produce the 'speech' when summoning
 	options         = false, -- option creation
-	frames			= true,  -- frames positioning
+	frames			= false,  -- frames positioning
 	}
 
 local ntooltip = CreateFrame("Frame", "ArcanistTooltip", UIParent, "GameTooltipTemplate");

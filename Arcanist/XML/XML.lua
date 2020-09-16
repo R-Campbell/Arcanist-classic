@@ -134,7 +134,7 @@ function Arcanist:CreateMageUI()
 	end
 
 	-- Define its attributes
-	FontString:SetText("00")
+	FontString:SetText("")
 	FontString:SetPoint("CENTER")
 	FontString:SetTextColor(1, 1, 1)
 end

@@ -300,6 +300,7 @@ Arcanist.Config.Sphere = {
 	["SPHERE_SKIN"] = L["SPHERE_SKIN"],
 	["SPHERE_EVENT"] = L["SPHERE_EVENT"],
 	["SPHERE_SPELL"] = L["SPHERE_SPELL"],
+	["SPHERE_SHOW_HIDE"] = L["SPHERE_SHOW_HIDE"],
 	["SPHERE_COUNTER"] = L["SPHERE_COUNTER"],
 	["SPHERE_STONE"] = L["SPHERE_STONE"],
 }
@@ -333,6 +334,8 @@ Arcanist.Config.Buttons.Name = {
 	["SHOW_CONJUREWATER"] = L["SHOW_CONJUREWATER"],
 	["SHOW_PORT"] = L["SHOW_PORT"],
 	["SHOW_MANA"] = L["SHOW_MANA"],
+	["SHOW_FOOD_COUNT"] = L["SHOW_FOOD_COUNT"],
+	["SHOW_WATER_COUNT"] = L["SHOW_WATER_COUNT"],
 }
 
 Arcanist.Config.Menus = {
